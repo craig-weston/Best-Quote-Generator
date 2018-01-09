@@ -6,6 +6,7 @@ var red;
 var green;
 var blue;
 var viewedQuotes =[];
+var arr = [];
 
 var quotes = [
   {
@@ -56,15 +57,27 @@ function print(quote) {
   
 // function to get a random quote
 function getRandomQuote() {
-  var randomNumber = Math.floor( Math.random() * quotes.length) + 1;
+	var flag = '1';
+	
 
-  var splicedQuote = quotes.splice(randomNumber, 1)[0];
-	viewedQuotes.push(splicedQuote);
-	if ( quotes.length === 0 ) {
-		quotes = viewedQuotes;
-		viewedQuotes = [];
-	}
-	return splicedQuote;
+	do {
+		var randomIndex = Math.floor(Math.random() * quotes.length);
+		
+		// if all random quote displayed, start again
+		if (arr.length === quotes.length) {
+			arr = [];
+		}
+
+		// check if index is already generated
+		if (arr.indexOf(randomIndex) === -1) {
+			arr.push(randomIndex);
+			flag = 0;
+		}
+
+	} while(flag === '1');
+	
+	// return quote
+	return quotes[randomIndex];
 }
 
 //function to genereate random rgb color value
